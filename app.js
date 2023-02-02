@@ -4,6 +4,8 @@ const notEmptyResults = results.filter(
         typeof avgTimePerWeek !== "undefined"
 );
 
+const resultsInMonths = notEmptyResults.map((res) => res[0]);
+
 const weeksInAYear = 52;
 const monthsInAYear = 12;
 
@@ -18,9 +20,15 @@ const resultsDTO = notEmptyResults.map(([timeInMonths, avgTimePerWeek]) => {
     };
 });
 
+const avgTimePerWeek = resultsDTO.map((r) => r.avgTimePerWeek);
+
+const resultsTotalHours = resultsDTO.map((r) => r.totalTimeInHours);
+
 const sortedResultsDTO = resultsDTO.sort(
     (a, b) => a.totalTimeInHours - b.totalTimeInHours
 );
+
+const sortedResultsDTOInHours = sortedResultsDTO.map((r) => r.totalTimeInHours);
 
 console.log(sortedResultsDTO);
 
@@ -35,6 +43,11 @@ const avgTimeInHours = Math.round(
 );
 
 const avgLearningTime = Math.round(
+    sortedResultsWithoutMargin.reduce((p, c) => c.avgTimePerWeek + p, 0) /
+        sortedResultsWithoutMargin.length
+);
+
+const avgAge = Math.round(
     sortedResultsWithoutMargin.reduce((p, c) => c.avgTimePerWeek + p, 0) /
         sortedResultsWithoutMargin.length
 );
